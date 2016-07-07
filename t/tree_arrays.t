@@ -39,10 +39,19 @@ B
   `-C
 TREE
 
+my $b_root_raw_tree = $tree->represent();
 is_deeply(
-    $tree->represent(),
+    $b_root_raw_tree,
     ["B", ["A", ["C"], ["G"]], ["D"], ["F", ["H"]]],
     'rerooted tree native representation is ok'
+);
+
+my $another_tree = Tree::arrays->build($b_root_raw_tree);
+$another_tree->reroot('A');
+is_deeply(
+    $raw_tree,
+    $another_tree->represent(),
+    'reproducibility is stable'
 );
 
 done_testing();
