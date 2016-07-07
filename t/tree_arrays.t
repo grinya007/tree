@@ -17,12 +17,12 @@ is_deeply(
 
 ok($tree->to_string() eq <<TREE, 'initial state is ok');
 A
-  G
-  C
-  B
-    F
-      H
-    D
+|-G
+|-C
+`-B
+  |-F
+  | `-H
+  `-D
 TREE
 
 eval { $tree->reroot('Z') };
@@ -31,12 +31,12 @@ ok(defined($@), 'attempt to reroot to inexistent node is prevented');
 $tree->reroot('B');
 ok($tree->to_string() eq <<TREE, 'root is now B');
 B
-  F
-    H
-  D
-  A
-    G
-    C
+|-F
+| `-H
+|-D
+`-A
+  |-G
+  `-C
 TREE
 
 is_deeply(

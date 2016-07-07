@@ -48,23 +48,23 @@ is_deeply(
 
 ok($tree->to_string() eq <<TREE, 'initial state is ok');
 A
-  E
-    G
-    F
-  C
-    D
-  B
+|-E
+| |-G
+| `-F
+|-C
+| `-D
+`-B
 TREE
 
 $tree->reroot('E');
-ok($tree->to_string() eq <<TREE, 'head is now E');
+ok($tree->to_string() eq <<TREE, 'root is now E');
 E
-  G
-  F
-  A
-    C
-      D
-    B
+|-G
+|-F
+`-A
+  |-C
+  | `-D
+  `-B
 TREE
 
 done_testing();

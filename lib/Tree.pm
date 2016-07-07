@@ -1,7 +1,7 @@
 package Tree;
+use 5.010;
 use strict;
 use warnings;
-use 5.010;
 use Carp qw/confess/;
 
 #
@@ -186,27 +186,46 @@ sub represent {
 
 # serializes tree as a string
 # places one label on a single line
-# indentation denotes node's degree
 sub to_string {
     my ($self) = @_;
     my $string = '';
-    my %visited;
 
     # Here the DFS (depth-first search) algorithm
     # is used to traverse the tree
-    # Each item in the queue is the tuple of two elements:
+    # Each item in the queue is the array of:
     #   - current node's label
-    #   - indentation multiplier
-    my @queue = ([ $self->{'_root'}, 0 ]);
+    #   - it's parent label or undef for root
+    #   - all subsequent elements are indentation
+    #     symbol indexes
+
+    my @symbols = (' ', '`', '|');
+    my @queue = ([ $self->{'_root'}, undef, () ]);
     while (my $vertex = pop(@queue)) {
-        my ($label, $indent) = @$vertex;
-        next if $visited{$label};
-        $visited{$label} = 1;
+        my ($label, $parent, @indent) = @$vertex;
 
-        $string .= ("  " x $indent) . $label . "\n";
+        if ($parent) {
+            for (my $i = 0; $i <= $#indent; $i++) {
+                $string .= ' ' if ($i);
+                $string .= $symbols[
+                    ($indent[$i] <=> 0) + 1
+                ];
+                $indent[$i] ||= -1;
+            }
+            $string .= "-$label\n";
+        }
+        else {
+            $string .= "$label\n";
+        }
 
-        my $adjacent = $self->{'_list'}{$label};
-        push(@queue, [ $_, $indent + 1 ]) for (@$adjacent);
+        my @adjacent = @{ $self->{'_list'}{$label} };
+        for (my ($i, $j) = (0, 0); $i <= $#adjacent; $i++) {
+            next if ($parent && $adjacent[$i] eq $parent);
+            push(@queue, [
+                $adjacent[$i], $label,
+                @indent, $j
+            ]);
+            $j++;
+        }
     }
     return $string;
 }
