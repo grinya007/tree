@@ -211,11 +211,9 @@ sub to_string {
                 ];
                 $indent[$i] ||= -1;
             }
-            $string .= "-$label\n";
+            $string .= '-';
         }
-        else {
-            $string .= "$label\n";
-        }
+        $string .= "$label\n";
 
         my @adjacent = @{ $self->{'_list'}{$label} };
         for (my ($i, $j) = (0, 0); $i <= $#adjacent; $i++) {
