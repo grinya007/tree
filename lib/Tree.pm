@@ -7,9 +7,8 @@ use Carp qw/confess/;
 #
 #   Descrition
 #
-#   Base class for operating on tree data structure.
-#   Implements representation independent methods and
-#   defines abstract interfaces for driver-subclasses.
+#   Base class that implements representation independent
+#   methods and defines abstract interfaces for driver-subclasses.
 #   Instances keep the initail tree represented as
 #   adjacency list. This class must not be used directly.
 #   Representation dependent interfaces are explained
