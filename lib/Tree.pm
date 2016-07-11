@@ -9,7 +9,7 @@ use Carp qw/confess/;
 #
 #   Base class that implements representation independent
 #   methods and defines abstract interfaces for driver-subclasses.
-#   Instances keep the initail tree represented as
+#   Instances keep the initial tree represented as
 #   adjacency list. This class must not be used directly.
 #   Representation dependent interfaces are explained
 #   below.
@@ -64,7 +64,7 @@ sub new {
 }
 
 # Tree builder static method.
-# The only argumentneeded is whatever
+# The only argument needed is whatever
 # tree structure representation.
 # Also does some consitency checking.
 sub build {
@@ -150,7 +150,7 @@ sub append_child        { ... }
 # node identified by given label
 sub reroot {
     my ($self, $new_root) = @_;
-    confess('new root lable is unknown') if (
+    confess('new root label is unknown') if (
         ! defined($new_root) || ! $self->{'_list'}{$new_root}
     );
     $self->{'_root'} = $new_root;
@@ -196,7 +196,6 @@ sub to_string {
     #   - it's parent label or undef for root
     #   - all subsequent elements are indentation
     #     symbol indexes
-
     my @symbols = (' ', '`', '|');
     my @queue = ([ $self->{'_root'}, undef, () ]);
     while (my $vertex = pop(@queue)) {
