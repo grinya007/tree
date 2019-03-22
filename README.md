@@ -1,2 +1,2 @@
 # tree
-A bit on tree data structure
+A bit of tree data structure
